@@ -93,7 +93,7 @@ void StrikeRegister::Accept(Counter64 sequence)
         return; // Already accepted
     }
 
-    int64_t distance = (int64_t)(sequence - WindowBase).ToUnsigned();
+    uint64_t distance = (sequence - WindowBase).ToUnsigned();
 
     // If it is too far ahead to be contained by the sliding window:
     if (distance >= kStrikeRegisterBits)
@@ -123,6 +123,7 @@ void StrikeRegister::Accept(Counter64 sequence)
         WindowBitRotation += slideBits;
 
         // Shift distance down
+        SECURITY_DEBUG_ASSERT(distance >= slideBits);
         distance -= slideBits;
     }
 
