@@ -10,7 +10,7 @@ This implementation of sliding window anti-replay protection avoids actually shi
 StrikeRegister will also decompress incoming nonce values from 1-7 bytes back to the original 8 byte (64-bit) sequence number based on recent values.
 
 # SimpleCipher
-This is a toy encryption scheme that looks random on the wire.  It's main goal is to be a fast obfuscator.
+This is a toy encryption scheme that looks random on the wire.  Its main goal is to be a fast obfuscator.
 
 
 ## Credits
