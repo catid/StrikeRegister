@@ -28,7 +28,6 @@
 */
 
 #include "StrikeRegister.h"
-#include "thirdparty/t1ha.h"
 
 // Compiler-specific debug break
 #if defined(_DEBUG) || defined(DEBUG)
