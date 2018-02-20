@@ -111,15 +111,24 @@ void StrikeRegister::Accept(Counter64 sequence)
         // Clear words that are being reused from the front
         SECURITY_DEBUG_ASSERT(WindowBitRotation % 64 == 0);
         unsigned word = WindowBitRotation / 64;
-        for (unsigned ii = 0; ii < slideWords; ++ii, ++word)
+        for (unsigned ii = 0; ii < slideWords; ++ii)
+        {
+            SECURITY_DEBUG_ASSERT(word < kWordCount);
             SlidingWindow[word] = 0;
+
+            ++word;
+            if (word >= kWordCount)
+                word = 0;
+        }
 
         // Move ahead the window base until it covers the new nonce
         const unsigned slideBits = slideWords * 64;
         WindowBase += slideBits;
 
-        // Note: It is fine to overflow since it is pow2
+        // Rotate window by slide count
         WindowBitRotation += slideBits;
+        if (WindowBitRotation >= kStrikeRegisterBits)
+            WindowBitRotation -= kStrikeRegisterBits;
 
         // Shift distance down
         SECURITY_DEBUG_ASSERT(distance >= slideBits);
